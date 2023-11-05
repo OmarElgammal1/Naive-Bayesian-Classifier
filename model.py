@@ -1,5 +1,6 @@
 from sklearn.datasets import load_iris
 from sklearn.naive_bayes import GaussianNB
+from sklearn.decomposition import PCA
 from utils import train_validate_test_split
 from utils import accuracy_score
 import matplotlib.pyplot as plt
@@ -12,7 +13,12 @@ X = iris.data
 y = iris.target
 
 # Split the dataset into training and testing sets Train: 40%, Validation:30%, Test:30%
-X_train, X_val, X_test, y_train, y_val, y_test = train_validate_test_split(X, y, testRatio=0.3, valRatio=0.3, random_state=43)
+X_train, X_val, X_test, y_train, y_val, y_test = train_validate_test_split(X, y, test_ratio=0.2)
+
+# # Applying dimensionality reduction
+# pca = PCA(n_components=2)
+# X_train = pca.fit_transform(X_train)
+# X_test = pca.transform(X_test)
 
 # Gaussian Naive Bayes classifier
 naiveBayes = GaussianNB()
@@ -20,18 +26,11 @@ naiveBayes = GaussianNB()
 # Train the classifier on the training data
 naiveBayes.fit(X_train, y_train)
 
-# Use the classifier to make predictions on the validation data
-y_validation_pred = naiveBayes.predict(X_val)
-
-# Calculate accuracy on the validation data
-accuracy_validation = accuracy_score(y_val, y_validation_pred)
-print("Validation Accuracy:", accuracy_validation)
-
 # Use the classifier to make predictions on the testing data
 y_test_pred = naiveBayes.predict(X_test)
 
 # Calculate the accuracy of the classifier
-accuracy = accuracy_score(y_test, y_test_pred)
+accuracy = accuracy_score(y_test_pred, y_test)
 print("Accuracy:", accuracy)
 
 # Create a list of feature pairs to visualize
