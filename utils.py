@@ -27,10 +27,7 @@ def train_validate_test_split (data, labels, test_ratio =0.3, val_ratio =0, rand
 
     train_data, val_data, test_data = data[train_indices], data[val_indices], data[test_indices]
     train_labels, val_labels, test_labels = labels[train_indices], labels[val_indices], labels[test_indices]
-    # Shuffle the data and the labels
-    combined = list(zip(data, labels))
-    np.random.shuffle(combined)
-    data, labels = zip(*combined)
+    
     return train_data, val_data, test_data, train_labels, val_labels, test_labels
 
 
